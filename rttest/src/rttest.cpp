@@ -658,6 +658,7 @@ int Rttest::lock_and_prefault_dynamic()
     return -1;
   }
 
+#if !__APPLE__ && !__FreeBSD__
   // Turn off malloc trimming.
   if (mallopt(M_TRIM_THRESHOLD, -1) == 0) {
     perror("mallopt for trim threshold failed");
@@ -672,6 +673,7 @@ int Rttest::lock_and_prefault_dynamic()
     munlockall();
     return -1;
   }
+#endif
 
   struct rusage usage;
   size_t page_size = sysconf(_SC_PAGESIZE);
@@ -694,8 +696,10 @@ int Rttest::lock_and_prefault_dynamic()
         delete[] ptr;
       }
 
+#if !__APPLE__ && !__FreeBSD__
       mallopt(M_TRIM_THRESHOLD, 128 * 1024);
       mallopt(M_MMAP_MAX, 65536);
+#endif
       munlockall();
       return -1;
     }
