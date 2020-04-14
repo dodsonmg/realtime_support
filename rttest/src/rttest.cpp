@@ -16,7 +16,13 @@
 #include <rttest/utils.h>
 
 #include <limits.h>
+
+#if __APPLE__ || __FreeBSD__
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
+
 #include <sys/mman.h>
 #include <sys/resource.h>
 #include <string.h>
