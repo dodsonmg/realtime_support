@@ -401,7 +401,7 @@ int rttest_init_new_thread()
     // Create the new Rttest instance for this thread
     rttest_instance_map.emplace(std::make_pair(thread_id, Rttest()));
   } else {
-    fprintf(stderr, "rttest instance for %lu already exists!\n", thread_id);
+    fprintf(stderr, "rttest instance for %lu already exists!\n", (uint64_t)thread_id);
     return -1;
   }
   if (initial_thread_id == 0 || rttest_instance_map.count(initial_thread_id) == 0) {
